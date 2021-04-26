@@ -1,0 +1,10 @@
+/*
+    Global Style - like bootstrap :)
+ */
+
+.bold{font-weight: bold;}
+.lighter{font-weight: lighter;}
+.italic{font-style: italic;}
+.underline{text-decoration: underline;}
+.gray{color: gray}
+img.border-round-img{border-radius: 50%}
