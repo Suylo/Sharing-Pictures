@@ -18,10 +18,3 @@ class login extends mainController
     }
 
 }
-
-
-
-
-
-
-

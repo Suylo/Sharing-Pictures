@@ -14,6 +14,16 @@ class profileController extends mainController
     private static array $userPictures;
     private static $userFavoritePictures;
 
+    public static function action()
+    {
+        self::$UID = $_GET["UID"];
+
+        self::$userInfos = UserDAO::getUserByID(self::$UID);
+        self::$userPictures = UserDAO::getPictureByUserID(self::$UID);
+        self::$userFavoritePictures = UserDAO::getPicturesFavByUserID(self::$UID);
+    }
+
+
     public static function displayContent()
     {
         self::action();
@@ -38,14 +48,7 @@ class profileController extends mainController
         require_once 'app/views/profile.php';
     }
 
-    public static function action()
-    {
-        self::$UID = $_GET["UID"];
 
-        self::$userInfos = UserDAO::getUserByID(self::$UID);
-        self::$userPictures = UserDAO::getPictureByUserID(self::$UID);
-        self::$userFavoritePictures = UserDAO::getPicturesFavByUserID(self::$UID);
-    }
 }
 
 

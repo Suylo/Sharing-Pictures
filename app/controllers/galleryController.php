@@ -21,6 +21,3 @@ class galleryController extends mainController
     }
 
 }
-
-
-?>
