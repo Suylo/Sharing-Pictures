@@ -140,7 +140,7 @@ main{
     -moz-column-count:    5;
     -moz-column-gap:      0px;
     column-count:         5;
-    column-gap:           25px;
+    column-gap:           10px;
 }
 
 #photos img {
@@ -151,14 +151,13 @@ main{
 
 
 .listPictures img{
-    border-radius: 5px;
+    border-radius: 10px;
     width: 256px;
-    margin: 15px;
+    margin: 5px;
     transition: all .2s ease-in-out;
 }
 .listPictures img:hover{
     cursor: pointer;
-    opacity: 0.7;
     transition: all .3s ease-in;
     transform: scale(1.1, 1.1);
 }
