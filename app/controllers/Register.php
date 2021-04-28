@@ -4,13 +4,13 @@ namespace App\controllers;
 
 use App\models\UserDAO;
 
-class register extends mainController
+class Register extends MainController
 {
 
 
     public static function displayContent()
     {
-        mainController::include();
+        MainController::include();
 
         $isRegistered = false;
         $message = "Aucun des champs n'a été renseigné";

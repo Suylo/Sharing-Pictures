@@ -6,7 +6,7 @@ use App\models\PictureDAO;
 use App\models\User;
 use App\models\UserDAO;
 
-class profileController extends mainController
+class ProfileController extends MainController
 {
 
     private static int $UID;
@@ -27,7 +27,7 @@ class profileController extends mainController
     public static function displayContent()
     {
         self::action();
-        mainController::include();
+        MainController::include();
 
 
         if (isset($_POST["submit"])) {

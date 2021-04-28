@@ -5,14 +5,14 @@ namespace App\controllers;
 
 use App\models\UserAuth;
 
-class login extends mainController
+class Login extends MainController
 {
 
     public static function displayContent()
     {
         UserAuth::getInstance()->userLogin();
 
-        mainController::include();
+        MainController::include();
 
         include_once 'app/views/authLogin.php';
     }

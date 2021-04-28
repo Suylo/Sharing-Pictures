@@ -4,7 +4,7 @@ namespace App\controllers;
 
 use App\models\UserAuth;
 
-class mainController
+class MainController
 {
 
     public static string $title;
@@ -14,41 +14,41 @@ class mainController
         switch ($q) {
             case "gallery":
                 self::$title = "Galerie";
-                galleryController::displayContent();
+                GalleryController::displayContent();
                 break;
             case "home":
                 self::$title = "Page d'accueil !";
-                homeController::displayContent();
+                HomeController::displayContent();
                 break;
             case "login":
                 self::$title = "Page de connexion";
-                login::displayContent();
+                Login::displayContent();
                 break;
             case "register":
                 self::$title = "Enregistrez-vous !";
-                register::displayContent();
+                Register::displayContent();
                 break;
             case "detail":
                 self::$title = "Détail de photo";
-                picturesController::displayContent();
+                PicturesController::displayContent();
                 break;
             case "profile":
                 self::$title = "Profil utilisateur";
-                profileController::displayContent();
+                ProfileController::displayContent();
                 break;
             case "logout":
                 UserAuth::getInstance()->userLogout();
                 break;
             case "settings":
                 self::$title = "Configuration des paramètres";
-                settings::displayContent();
+                Settings::displayContent();
                 break;
             case "fav":
                 fav::content();
                 break;
             default:
                 self::$title = "Page d'accueil !";
-                homeController::displayContent();
+                HomeController::displayContent();
         }
     }
 

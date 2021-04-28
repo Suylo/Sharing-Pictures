@@ -7,14 +7,14 @@ use App\models\UserAuth;
 use App\models\UserDAO;
 
 
-class settings extends mainController
+class Settings extends MainController
 {
 
     private static User $userInfos;
 
     public static function displayContent()
     {
-        mainController::include();
+        MainController::include();
         self::checkForm();
         require_once "app/views/settings.php";
     }

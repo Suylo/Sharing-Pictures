@@ -5,7 +5,7 @@ use App\controllers\mainController;
 
 include "vendor/autoload.php";
 
-include 'app/controllers/mainController.php';
+include 'app/controllers/MainController.php';
 
 
 if (isset($_GET["q"])) {

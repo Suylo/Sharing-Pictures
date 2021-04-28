@@ -5,7 +5,7 @@ namespace App\controllers;
 use App\models\PictureDAO;
 use App\models\UserAuth;
 
-class galleryController extends mainController
+class GalleryController extends MainController
 {
 
     private static array $listOfPictures;
@@ -15,7 +15,7 @@ class galleryController extends mainController
         self::$listOfPictures = PictureDAO::getAllPictures();
 
         UserAuth::sessionStart();
-        mainController::include();
+        MainController::include();
 
         include 'app/views/gallery.php';
     }

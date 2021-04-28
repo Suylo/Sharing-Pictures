@@ -9,7 +9,7 @@ use App\models\UserAuth;
 use App\models\UserDAO;
 
 
-class picturesController extends mainController
+class PicturesController extends MainController
 {
 
 
@@ -66,7 +66,7 @@ class picturesController extends mainController
 
     public static function displayContent()
     {
-        mainController::include();
+        MainController::include();
         self::action();
 
         if (UserAuth::getInstance()->userIsLoggedOn()) {

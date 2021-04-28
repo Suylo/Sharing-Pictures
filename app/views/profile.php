@@ -50,14 +50,13 @@ use App\models\UserAuth;
         } ?>
 	</h3>
 	<div class="listPictures" id="photos">
-
         <?php foreach (self::$userPictures as $key => $val) { ?>
-			<a href="?q=detail&idP=<?= $val->getPictureID() ?>&idU=<?= $val->getUserId(); ?>"><img
-						src="<?= $val->getPictureURL(); ?>" alt="<?= $val->getPictureWording(); ?>"></a>
+			<a href="?q=detail&idP=<?= $val->getPictureID() ?>&idU=<?= $val->getUserId(); ?>"><img src="<?= $val->getPictureURL(); ?>" alt="<?= $val->getPictureWording(); ?>"></a>
         <?php } ?>
 	</div>
 
-	<h3><i class="bi bi-heart"></i>
+	<h3>
+		<i class="bi bi-heart"></i>
         <?php if (self::$userInfos->getUserEmail() == UserAuth::getInstance()->getMailLoggedOn()) {
             echo "Liste des photos que j'ai aimés : ";
         } else {
@@ -66,8 +65,7 @@ use App\models\UserAuth;
 	</h3>
 	<div class="listPictures" id="favPhotos">
         <?php foreach (self::$userFavoritePictures as $key => $val) { ?>
-			<a href="?q=detail&idP=<?= $val->getPictureID() ?>&idU=<?= $val->getUserId(); ?>"><img
-						src="<?= $val->getPictureURL(); ?>" alt="<?= $val->getPictureWording(); ?>"></a>
+			<a href="?q=detail&idP=<?= $val->getPictureID() ?>&idU=<?= $val->getUserId(); ?>"><img src="<?= $val->getPictureURL(); ?>" alt="<?= $val->getPictureWording(); ?>"></a>
         <?php } ?>
 	</div>
 </main>

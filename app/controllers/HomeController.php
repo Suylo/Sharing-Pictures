@@ -2,12 +2,12 @@
 
 namespace App\controllers;
 
-class homeController extends mainController
+class HomeController extends MainController
 {
 
     public static function displayContent()
     {
-        mainController::include();
+        MainController::include();
         include 'app/views/home.php';
     }
 

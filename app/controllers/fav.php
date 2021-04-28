@@ -5,7 +5,7 @@ namespace App\controllers;
 use App\models\PictureDAO;
 use App\models\UserAuth;
 
-class fav extends mainController
+class fav extends MainController
 {
 
     private static int $idP;
