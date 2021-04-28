@@ -23,23 +23,6 @@ class picturesController extends mainController
     private static array $listOfComments;
     private static int $favPicture;
 
-    public static function displayContent()
-    {
-        mainController::include();
-        self::action();
-
-        if (UserAuth::getInstance()->userIsLoggedOn()) {
-            self::$UIDofUserLogged = UserDAO::getUserByMail(UserAuth::getInstance()->getMailLoggedOn())->getUserID();
-
-            self::checkForm();
-        } else {
-            self::$UIDofUserLogged = "";
-
-            self::checkForm();
-        }
-
-        include 'app/views/pictures.php';
-    }
 
     public static function action()
     {
@@ -79,6 +62,24 @@ class picturesController extends mainController
             PictureDAO::editPictureCaption($newCaption, self::$pID);
             header("Location: ?q=detail&idP=" . self::$pID . "&idU=" . self::$UID);
         }
+    }
+
+    public static function displayContent()
+    {
+        mainController::include();
+        self::action();
+
+        if (UserAuth::getInstance()->userIsLoggedOn()) {
+            self::$UIDofUserLogged = UserDAO::getUserByMail(UserAuth::getInstance()->getMailLoggedOn())->getUserID();
+
+            self::checkForm();
+        } else {
+            self::$UIDofUserLogged = "";
+
+            self::checkForm();
+        }
+
+        include 'app/views/pictures.php';
     }
 
 }
