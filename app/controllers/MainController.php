@@ -46,6 +46,14 @@ class MainController
             case "fav":
                 fav::content();
                 break;
+            case "groups":
+                self::$title = "Liste des groupes";
+                GroupController::displayContent();
+                break;
+            case "search":
+                self::$title = "Recherche...";
+                Search::displayContent();
+                break;
             default:
                 self::$title = "Page d'accueil !";
                 HomeController::displayContent();

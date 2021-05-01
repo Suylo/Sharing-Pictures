@@ -3,6 +3,7 @@
 
 namespace App\controllers;
 
+use App\models\PictureDAO;
 use App\models\UserAuth;
 use App\models\UserDAO;
 

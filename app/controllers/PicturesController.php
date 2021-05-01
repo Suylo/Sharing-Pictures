@@ -74,7 +74,7 @@ class PicturesController extends MainController
 
             self::checkForm();
         } else {
-            self::$UIDofUserLogged = "";
+            self::$UIDofUserLogged = intval("");
 
             self::checkForm();
         }

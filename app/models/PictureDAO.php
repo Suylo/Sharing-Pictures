@@ -188,5 +188,29 @@ class PictureDAO extends DAO
 
         return $query->execute();
     }
+
+    public static function getAllPicturesByWording(String $pictureWording): array
+    {
+        $myPicturesCollection = array();
+
+        DAO::init();
+        $query = self::$connDb->prepare("SELECT * FROM photo WHERE caption LIKE :pWording");
+        $query->bindValue(':pWording', "%".$pictureWording."%", PDO::PARAM_STR);
+        $query->execute();
+        $pictures = $query->fetch(PDO::FETCH_ASSOC);
+
+        while ($pictures) {
+            $myPicturesCollection[$pictures["pictureID"]] = new Picture(
+                $pictures["pictureID"],
+                $pictures["caption"],
+                $pictures["url"],
+                $pictures["fk_userID"]
+            );
+            $pictures = $query->fetch(PDO::FETCH_ASSOC);
+        }
+
+        return $myPicturesCollection;
+    }
+
 }
 
