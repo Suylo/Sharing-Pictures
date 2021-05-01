@@ -38,7 +38,7 @@ class ProfileController extends MainController
 
             PictureDAO::addPictureIntoDB($pWording, "img/" . $pName, self::$UID);
             move_uploaded_file($_FILES['picture']['tmp_name'], $uploadDirectory . $pName);
-            header("Location: ?q=profile&UID=" . self::$UID);
+            header("Location: ./user-" . self::$UID);
             $message = "Image uploadée !";
 
         } else {

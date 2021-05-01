@@ -42,16 +42,16 @@ class PicturesController extends MainController
         self::$favPicture = PictureDAO::getFavPictureByIDs(self::$pID, self::$UIDofUserLogged);
 
         // Comment section, check if comment, submit and if user is connected
-        if (isset($_POST["comment"]) && isset($_POST["submit_comment"]) && self::$isConnected) {
+        if (isset($_POST["comment"]) && isset($_POST["submit_comment"]) && $_POST["comment"] != "" && self::$isConnected) {
             $content = $_POST["comment"];
             PictureDAO::addComment(self::$UIDofUserLogged, self::$pID, $content);
-            header("Location: ?q=detail&idP=" . self::$pID . "&idU=" . self::$UID);
+            header("Location: ./pictures-p" . self::$pID . "-u" . self::$UID);
         }
 
         // Delete picture section, check if
         if (isset($_POST["delete_picture"])) {
             PictureDAO::removePictureFromDB(self::$pID, self::$UID);
-            header("Location: ?q=profile&UID=" . self::$UIDofUserLogged);
+            header("Location: ./user-" . self::$UIDofUserLogged);
         }
 
         self::$numberOfLikes = PictureDAO::countFavPictureByID(self::$pID);
@@ -60,7 +60,7 @@ class PicturesController extends MainController
         if (isset($_POST["saveEditedCaption"]) && isset($_POST["editedCaptionContent"])) {
             $newCaption = $_POST["editedCaptionContent"];
             PictureDAO::editPictureCaption($newCaption, self::$pID);
-            header("Location: ?q=detail&idP=" . self::$pID . "&idU=" . self::$UID);
+            header("Location: ./pictures-p" . self::$pID . "-u" . self::$UID);
         }
     }
 

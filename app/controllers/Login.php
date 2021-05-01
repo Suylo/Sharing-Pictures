@@ -7,12 +7,13 @@ use App\models\UserAuth;
 
 class Login extends MainController
 {
+    private static String $msg;
 
     public static function displayContent()
     {
-        UserAuth::getInstance()->userLogin();
-
+        self::$msg = "";
         MainController::include();
+        UserAuth::getInstance()->userLogin();
 
         include_once 'app/views/authLogin.php';
     }

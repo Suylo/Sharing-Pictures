@@ -13,6 +13,15 @@ class fav extends MainController
     private static int $idUC;
     private static string $state;
 
+    public static function action()
+    {
+        self::$idP = $_GET["idP"];
+        self::$idU = $_GET["idU"];
+        self::$idUC = $_GET["idUC"];
+        self::$state = $_GET["like"];
+    }
+
+
     public static function content()
     {
         self::action();
@@ -26,15 +35,8 @@ class fav extends MainController
             }
         }
 
-        header("Location: ?q=detail&idP=" . self::$idP . "&idU=" . self::$idU);
+        header("Location: ./pictures-p" . self::$idP . "-u" . self::$idU);
     }
 
-    public static function action()
-    {
-        self::$idP = $_GET["idP"];
-        self::$idU = $_GET["idU"];
-        self::$idUC = $_GET["idUC"];
-        self::$state = $_GET["like"];
-    }
 
 }

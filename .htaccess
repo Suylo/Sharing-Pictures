@@ -1,0 +1,15 @@
+Options +FollowSymlinks
+RewriteEngine On
+
+# Réécriture des URL des articles
+RewriteRule ^home$ ./?q=home [L]
+
+RewriteRule ^user-([0-9]+)$ ./?q=profile&UID=$1 [L]
+RewriteRule ^pictures-p([0-9]+)-u([0-9]+)$ ./?q=detail&idP=$1&idU=$2 [L]
+RewriteRule ^login$ ./?q=login [L]
+RewriteRule ^register$ ./?q=register [L]
+RewriteRule ^logout$ ./?q=logout [L]
+RewriteRule ^gallery$ ./?q=gallery [L]
+RewriteRule ^settings$ ./?q=settings [L]
+RewriteRule ^groups$ ./?q=groups [L]
+

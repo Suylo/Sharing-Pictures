@@ -9,7 +9,7 @@
 
 	<div class="listPictures" id="photos">
         <?php foreach (self::$listOfPictures as $key => $val) { ?>
-			<a href="?q=detail&idP=<?= $val->getPictureID() ?>&idU=<?= $val->getUserId(); ?>"><img
+			<a href="./pictures-p<?= $val->getPictureID() ?>-u<?= $val->getUserId(); ?>"><img
 						src="<?= $val->getPictureURL() ?>" alt="<?= $val->getPictureWording() ?>"></a>
         <?php } ?>
 	</div>

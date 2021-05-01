@@ -7,6 +7,7 @@ class UserAuth
 {
 
     private static UserAuth $_instance;
+    private static String $msg;
 
     public static function getInstance(): UserAuth
     {
@@ -20,7 +21,8 @@ class UserAuth
     {
         self::sessionStart();
 
-        if (isset($_POST["userEmail"]) && isset($_POST["userPassword"])) {
+
+        if (isset($_POST["userEmail"]) && isset($_POST["userPassword"]) && isset($_POST["submit_login"])) {
             $email = $_POST["userEmail"];
             $postPassword = $_POST["userPassword"];
 
@@ -31,9 +33,11 @@ class UserAuth
             if (trim($dbPassword) == trim($postPassword) && (trim($email) == trim($dbEmail))) {
                 $_SESSION["userEmail"] = $email;
                 $_SESSION["userPassword"] = $dbPassword;
-                header("Location: ?q=home");
+                header("Location: ./home");
+            } else if (trim($postPassword) != trim($dbPassword) || (trim($email) == trim($dbEmail))) {
+                self::$msg = "Password ou Email incorrecte.";
             } else {
-                header("Location: ?q=register");
+                self::$msg = "";
             }
         }
     }
@@ -50,7 +54,7 @@ class UserAuth
         self::sessionStart();
         unset($_SESSION["userEmail"]);
         unset($_SESSION["userPassword"]);
-        header("Location: ?q=home");
+        header("Location: ./home");
     }
 
     public function getMailLoggedOn()

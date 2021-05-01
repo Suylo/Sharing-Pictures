@@ -32,7 +32,7 @@ class Register extends MainController
                 $isItReg = UserDAO::userRegister($regFirstName, $regLastName, $regEmail, $regPassword);
                 $_SESSION["userEmail"] = $regEmail;
                 $_SESSION["userPassword"] = $regPassword;
-                header("Location: ?q=home");
+                header("Location: ./home");
                 if ($isItReg == true) {
                     $isRegistered = true;
                 } else {

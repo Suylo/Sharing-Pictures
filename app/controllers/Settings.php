@@ -11,6 +11,7 @@ class Settings extends MainController
 {
 
     private static User $userInfos;
+    private static String $msg;
 
     public static function displayContent()
     {
@@ -23,6 +24,7 @@ class Settings extends MainController
     {
         self::$userInfos = UserDAO::getUserByMail(UserAuth::getInstance()->getMailLoggedOn());
         $userID = self::$userInfos->getUserID();
+        $userMail = self::$userInfos->getUserEmail();
 
         if (isset($_POST["save"])) {
             UserDAO::editUserInfos($_POST["firstName-edit"],
@@ -32,12 +34,18 @@ class Settings extends MainController
                 $_POST["userBirthdate-edit"],
                 $userID
             );
-            header("Location: ?q=settings");
+            header("Location: ./settings");
         }
 
-        if (isset($_POST["confirmation"]) && isset($_POST["submitDelete"]) && $_POST["confirmation"] == $userID) {
+        if (isset($_POST["confirmation"]) && isset($_POST["submitDelete"]) && $_POST["confirmation"] == $userMail) {
             UserAuth::getInstance()->userLogout();
             UserDAO::removeUserFromDB($userID);
+        } else if (isset($_POST["submitDelete"]) && $_POST["confirmation"] == "") {
+            self::$msg = "Le champ de confirmation n'a pas été rempli !";
+        } else if (isset($_POST["submitDelete"]) && $_POST["confirmation"] != $userMail) {
+            self::$msg = "L'adresse donné ne correspond pas à la votre ! N'essayez pas de supprimer un autre compte :)";
+        } else {
+            self::$msg = "";
         }
     }
 
