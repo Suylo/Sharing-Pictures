@@ -5,12 +5,12 @@
 
 	<div class="title">
 		<h2 class="bold">Connexion</h2>
-		<form action="./?q=login" method="POST">
+		<form method="POST">
 
-			<input type="text" name="userEmail" placeholder="Email"/><br/>
-			<input type="password" name="userPassword" placeholder="Mot de passe"/><br/>
-			<input type="submit"/>
-
+			<input type="text" name="userEmail" placeholder="Email" class="input"/><br/>
+			<input type="password" name="userPassword" placeholder="Mot de passe" class="input"/><br/>
+			<input type="submit" name="submit_login" class="submit"/>
+			<?= self::$msg ?>
 		</form>
 
 	</div>

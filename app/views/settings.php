@@ -33,50 +33,50 @@
 				<p>
 					<span class="gray italic">Date création du compte </span> <?= self::$userInfos->getCreationDate() ?>
 				</p>
-				<form action="?q=settings" method="post">
-					<input type="submit" name="edit" value="Modifier">
+				<form method="post">
+					<input type="submit" name="edit" value="Modifier" class="submit">
 				</form>
 			</div>
         <?php } else { ?>
 			<div class="modif">
-				<form action="?q=settings" method="post">
+				<form method="post">
 					<p>
 						<span class="gray italic">Prénom</span>
-						<input type="text" name="firstName-edit" value="<?= self::$userInfos->getFirstName(); ?>">
+						<input type="text" name="firstName-edit" value="<?= self::$userInfos->getFirstName(); ?>" class="input">
 					</p>
 					<p>
 						<span class="gray italic">Nom</span>
-						<input type="text" name="lastName-edit" value="<?= self::$userInfos->getLastName(); ?>">
+						<input type="text" name="lastName-edit" value="<?= self::$userInfos->getLastName(); ?>" class="input">
 					</p>
 					<p>
 						<span class="gray italic">Courriel</span> <?= self::$userInfos->getUserEmail() ?>
 					</p>
 					<p>
 						<span class="gray italic">Adresse</span>
-						<input type="text" name="Address-edit" value="<?= self::$userInfos->getAddress() ?>">
+						<input type="text" name="Address-edit" value="<?= self::$userInfos->getAddress() ?>" class="input">
 					</p>
 					<p>
 						<span class="gray italic">Code Postal</span>
-						<input type="text" name="postalCode-edit" value="<?= self::$userInfos->getPostalCode() ?>">
+						<input type="text" name="postalCode-edit" value="<?= self::$userInfos->getPostalCode() ?>" class="input">
 					</p>
 					<p>
 						<span class="gray italic">Date d'anniversaire</span>
-						<input type="text" name="userBirthdate-edit" value="<?= self::$userInfos->getBirthDate() ?>">
+						<input type="text" name="userBirthdate-edit" value="<?= self::$userInfos->getBirthDate() ?>" class="input">
 					</p>
-					<input type="submit" name="save" value="Sauvegarder">
+					<input type="submit" name="save" value="Sauvegarder" class="submit">
 				</form>
 			</div>
         <?php } ?>
 		<div class="options">
-			<h1>Option dangereuse</h1>
+			<h1 class="danger"><i class="bi bi-exclamation-triangle"></i> Option dangereuse</h1>
 			<p>
-				Afin de confirmer la suppresion de votre compte, veuillez entrer l'ID de votre compte
-				: <?= self::$userInfos->getUserID() ?>
+				Afin de confirmer la suppresion de votre compte, veuillez entrer l'email de votre compte
 			</p>
-			<form action="?q=settings" method="post">
-				<input type="text" name="confirmation" placeholder="<?= self::$userInfos->getUserID() ?>">
-				<input type="submit" name="submitDelete" value="Supprimer votre compte">
+			<form method="post">
+				<input type="text" name="confirmation" placeholder="<?= self::$userInfos->getUserEmail() ?>" class="input">
+				<input type="submit" name="submitDelete" value="Supprimer votre compte" class="submit">
 			</form>
+			<?= self::$msg ?>
 		</div>
 	</div>
 

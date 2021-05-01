@@ -30,11 +30,11 @@ use App\models\UserAuth;
 		</div>
         <?php if (self::$userInfos->getUserEmail() == UserAuth::getInstance()->getMailLoggedOn()) { ?>
 			<div class="upload">
-				<form action="./?q=profile&UID=<?= self::$userInfos->getUserID() ?>" method="POST"
+				<form action="./user-<?= self::$userInfos->getUserID() ?>" method="POST"
 				      enctype="multipart/form-data">
-					<input type="file" name="picture" id="picture">
-					<input type="text" name="pictureWording" id="pictureWording" placeholder="Description de la photo">
-					<input type="submit" name="submit" value="Envoyer">
+					<input type="file" name="picture" id="picture" class="submit">
+					<input type="text" name="pictureWording" id="pictureWording" placeholder="Description de la photo" class="input">
+					<input type="submit" name="submit" value="Envoyer" class="submit">
 				</form>
                 <?= $message ?>
 			</div>
@@ -51,7 +51,7 @@ use App\models\UserAuth;
 	</h3>
 	<div class="listPictures" id="photos">
         <?php foreach (self::$userPictures as $key => $val) { ?>
-			<a href="?q=detail&idP=<?= $val->getPictureID() ?>&idU=<?= $val->getUserId(); ?>"><img src="<?= $val->getPictureURL(); ?>" alt="<?= $val->getPictureWording(); ?>"></a>
+			<a href="./pictures-p<?= $val->getPictureID() ?>-u<?= $val->getUserId(); ?>"><img src="<?= $val->getPictureURL(); ?>" alt="<?= $val->getPictureWording(); ?>"></a>
         <?php } ?>
 	</div>
 
@@ -65,7 +65,7 @@ use App\models\UserAuth;
 	</h3>
 	<div class="listPictures" id="favPhotos">
         <?php foreach (self::$userFavoritePictures as $key => $val) { ?>
-			<a href="?q=detail&idP=<?= $val->getPictureID() ?>&idU=<?= $val->getUserId(); ?>"><img src="<?= $val->getPictureURL(); ?>" alt="<?= $val->getPictureWording(); ?>"></a>
+			<a href="./pictures-p<?= $val->getPictureID() ?>-u<?= $val->getUserId(); ?>"><img src="<?= $val->getPictureURL(); ?>" alt="<?= $val->getPictureWording(); ?>"></a>
         <?php } ?>
 	</div>
 </main>
