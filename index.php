@@ -1,7 +1,7 @@
 <?php
 
 
-use App\controllers\mainController;
+use App\controllers\MainController;
 
 include "vendor/autoload.php";
 
@@ -14,4 +14,4 @@ if (isset($_GET["q"])) {
     $q = "home";
 }
 
-mainController::router($q);
+MainController::router($q);
