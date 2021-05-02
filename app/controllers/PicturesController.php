@@ -62,6 +62,11 @@ class PicturesController extends MainController
             PictureDAO::editPictureCaption($newCaption, self::$pID);
             header("Location: ./pictures-p" . self::$pID . "-u" . self::$UID);
         }
+
+        if (isset($_POST["delete_comment"])){
+            PictureDAO::removeComment($_POST["delete_comment"]);
+            header("Location: ./pictures-p" . self::$pID . "-u" . self::$UID);
+        }
     }
 
     public static function displayContent()

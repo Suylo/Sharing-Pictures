@@ -169,12 +169,11 @@ class PictureDAO extends DAO
         return $query->execute();
     }
 
-    public static function removeComment($userID, $pictureID)
+    public static function removeComment($commentID)
     {
         DAO::init();
-        $query = self::$connDb->prepare("DELETE FROM comment WHERE userID = :userID and pictureID = :pictureID");
-        $query->bindValue(":userID", $userID, PDO::PARAM_INT);
-        $query->bindValue(":pictureID", $pictureID, PDO::PARAM_INT);
+        $query = self::$connDb->prepare("DELETE FROM comment WHERE commentID = :commentID");
+        $query->bindValue(":commentID", $commentID, PDO::PARAM_INT);
 
         return $query->execute();
     }
