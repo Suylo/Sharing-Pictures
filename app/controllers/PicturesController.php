@@ -23,17 +23,14 @@ class PicturesController extends MainController
     private static array $listOfComments;
     private static int $favPicture;
 
-
     public static function action()
     {
-        // Get UID and PID in URL parameters
         self::$pID = $_GET["idP"];
         self::$UID = $_GET["idU"];
 
-        // Get all functions
         self::$userInfos = UserDAO::getUserByID(self::$UID);
         self::$pictureInfos = PictureDAO::getPictureByPictureID(self::$pID);
-        self::$isConnected = UserAuth::getInstance()->userIsLoggedOn();
+        self::$isConnected = UserAuth::userIsLoggedOn();
     }
 
     public static function checkForm()
@@ -41,14 +38,12 @@ class PicturesController extends MainController
 
         self::$favPicture = PictureDAO::getFavPictureByIDs(self::$pID, self::$UIDofUserLogged);
 
-        // Comment section, check if comment, submit and if user is connected
         if (isset($_POST["comment"]) && isset($_POST["submit_comment"]) && $_POST["comment"] != "" && self::$isConnected) {
             $content = $_POST["comment"];
             PictureDAO::addComment(self::$UIDofUserLogged, self::$pID, $content);
             header("Location: ./pictures-p" . self::$pID . "-u" . self::$UID);
         }
 
-        // Delete picture section, check if
         if (isset($_POST["delete_picture"])) {
             PictureDAO::removePictureFromDB(self::$pID, self::$UID);
             header("Location: ./user-" . self::$UIDofUserLogged);
@@ -71,11 +66,11 @@ class PicturesController extends MainController
 
     public static function displayContent()
     {
-        MainController::include();
+        self::include();
         self::action();
 
-        if (UserAuth::getInstance()->userIsLoggedOn()) {
-            self::$UIDofUserLogged = UserDAO::getUserByMail(UserAuth::getInstance()->getMailLoggedOn())->getUserID();
+        if (UserAuth::userIsLoggedOn()) {
+            self::$UIDofUserLogged = UserDAO::getUserByMail(UserAuth::getMailLoggedOn())->getUserID();
 
             self::checkForm();
         } else {
@@ -86,7 +81,6 @@ class PicturesController extends MainController
 
         include 'app/views/pictures.php';
     }
-
 }
 
 

@@ -15,7 +15,7 @@ class GalleryController extends MainController
         self::$listOfPictures = PictureDAO::getAllPictures();
 
         UserAuth::sessionStart();
-        MainController::include();
+        self::include();
 
         include 'app/views/gallery.php';
     }

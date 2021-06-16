@@ -37,7 +37,7 @@ class MainController
                 ProfileController::displayContent();
                 break;
             case "logout":
-                UserAuth::getInstance()->userLogout();
+                UserAuth::userLogout();
                 break;
             case "settings":
                 self::$title = "Configuration des paramètres";
@@ -64,5 +64,18 @@ class MainController
     {
         include 'assets/includes/head.php';
         include 'assets/includes/header.php';
+    }
+
+    public static function redirect()
+    {
+        if (UserAuth::userIsLoggedOn() == false){
+            header("Location: ./home");
+        }
+    }
+
+    public static function redirectIf(){
+        if (UserAuth::userIsLoggedOn()){
+            header("Location: ./home");
+        }
     }
 }

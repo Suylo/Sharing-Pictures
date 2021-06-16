@@ -21,7 +21,8 @@ class PictureDAO extends DAO
                 $pictures["pictureID"],
                 $pictures["caption"],
                 $pictures["url"],
-                $pictures["fk_userID"]
+                $pictures["fk_userID"],
+                $pictures["datePicture"]
             );
             $pictures = $query->fetch(PDO::FETCH_ASSOC);
         }
@@ -29,6 +30,52 @@ class PictureDAO extends DAO
         return $myPicturesCollection;
     }
 
+    public static function getLastPictures(): array
+    {
+        $myLastPicturesCollection = array();
+
+        DAO::init();
+        $query = self::$connDb->prepare("SELECT * FROM photo WHERE datePicture = CURRENT_DATE");
+        $query->execute();
+        $pictures = $query->fetch(PDO::FETCH_ASSOC);
+
+        while ($pictures) {
+            $myLastPicturesCollection[$pictures["pictureID"]] = new Picture(
+                $pictures["pictureID"],
+                $pictures["caption"],
+                $pictures["url"],
+                $pictures["fk_userID"],
+                $pictures["datePicture"]
+            );
+            $pictures = $query->fetch(PDO::FETCH_ASSOC);
+        }
+
+        return $myLastPicturesCollection;
+    }
+
+    public static function getLastFivePictures($userID): array
+    {
+        $myLastPicturesCollection = array();
+
+        DAO::init();
+        $query = self::$connDb->prepare("SELECT * FROM photo WHERE fk_userID = :userID ORDER BY datePicture DESC LIMIT 5");
+        $query->bindValue(':userID', $userID, PDO::PARAM_INT);
+        $query->execute();
+        $pictures = $query->fetch(PDO::FETCH_ASSOC);
+
+        while ($pictures) {
+            $myLastPicturesCollection[$pictures["pictureID"]] = new Picture(
+                $pictures["pictureID"],
+                $pictures["caption"],
+                $pictures["url"],
+                $pictures["fk_userID"],
+                $pictures["datePicture"]
+            );
+            $pictures = $query->fetch(PDO::FETCH_ASSOC);
+        }
+
+        return $myLastPicturesCollection;
+    }
 
     public static function getPicturesByUserID(int $userID)
     {
@@ -46,7 +93,8 @@ class PictureDAO extends DAO
                 $pictures["pictureID"],
                 $pictures["caption"],
                 $pictures["url"],
-                $pictures["fk_userID"]
+                $pictures["fk_userID"],
+                $pictures["datePicture"]
             );
             $pictures = $query->fetch(PDO::FETCH_ASSOC);
         }
@@ -68,13 +116,14 @@ class PictureDAO extends DAO
             $pictures["caption"],
             $pictures["url"],
             $pictures["fk_userID"],
+            $pictures["datePicture"]
         );
     }
 
     public static function addPictureIntoDB($pictureWording, $pictureURL, $userID)
     {
         DAO::init();
-        $query = self::$connDb->prepare("INSERT INTO photo (caption, url, fk_userID) VALUES (:pWording, :pURL, :uID)");
+        $query = self::$connDb->prepare("INSERT INTO photo (caption, url, fk_userID, datePicture) VALUES (:pWording, :pURL, :uID, CURRENT_DATE)");
         $query->bindValue(":pWording", $pictureWording, PDO::PARAM_STR);
         $query->bindValue(":pURL", $pictureURL, PDO::PARAM_STR);
         $query->bindValue(":uID", $userID, PDO::PARAM_STR);
@@ -111,7 +160,6 @@ class PictureDAO extends DAO
 
         return $query->execute();
     }
-
 
     public static function getFavPictureByIDs($pictureID, $userID)
     {
@@ -157,7 +205,6 @@ class PictureDAO extends DAO
         return $ListOfPictures;
     }
 
-
     public static function addComment($userID, $pictureID, $comment)
     {
         DAO::init();
@@ -188,13 +235,13 @@ class PictureDAO extends DAO
         return $query->execute();
     }
 
-    public static function getAllPicturesByWording(String $pictureWording): array
+    public static function getAllPicturesByWording(string $pictureWording): array
     {
         $myPicturesCollection = array();
 
         DAO::init();
         $query = self::$connDb->prepare("SELECT * FROM photo WHERE caption LIKE :pWording");
-        $query->bindValue(':pWording', "%".$pictureWording."%", PDO::PARAM_STR);
+        $query->bindValue(':pWording', "%" . $pictureWording . "%", PDO::PARAM_STR);
         $query->execute();
         $pictures = $query->fetch(PDO::FETCH_ASSOC);
 
@@ -203,7 +250,8 @@ class PictureDAO extends DAO
                 $pictures["pictureID"],
                 $pictures["caption"],
                 $pictures["url"],
-                $pictures["fk_userID"]
+                $pictures["fk_userID"],
+                $pictures["datePicture"]
             );
             $pictures = $query->fetch(PDO::FETCH_ASSOC);
         }

@@ -9,6 +9,7 @@ class Picture
     private string $pictureWording;
     private string $pictureURL;
     private string $userID;
+    private $datePicture;
 
     /**
      * Picture constructor.
@@ -17,12 +18,13 @@ class Picture
      * @param String $PictureURL - The URL of picture e.g. "img/imgName.jpg"
      * @param int $UserID - USER ID for references to user/pictures
      */
-    public function __construct(int $PictureID, string $PictureWording, string $PictureURL, int $UserID)
+    public function __construct(int $PictureID, string $PictureWording, string $PictureURL, int $UserID, $DatePicture)
     {
         $this->pictureID = $PictureID;
         $this->pictureWording = $PictureWording;
         $this->pictureURL = $PictureURL;
         $this->userID = $UserID;
+        $this->datePicture = $DatePicture;
     }
 
     /**
@@ -55,6 +57,14 @@ class Picture
     public function getUserID()
     {
         return $this->userID;
+    }
+
+    /**
+     * @return String
+     */
+    public function getDatePicture(): string
+    {
+        return $this->datePicture;
     }
 
 

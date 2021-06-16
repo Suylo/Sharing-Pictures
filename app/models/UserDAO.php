@@ -87,18 +87,14 @@ class UserDAO extends DAO
         DAO::init();
         $query = self::$connDb->prepare(
             "insert into user (firstName, lastName, Address, PostalCode, BirthDate, Email, Password, creationDate)
-            values(:firstName, :lastName, null, null, null, :userEmail, :userPassword, now())"
-        );
+            values(:firstName, :lastName, null, null, null, :userEmail, :userPassword, now()); insert into profile (userEmail, ppURL) values (:userEmail, 'img/profile/avatar.jpg');");
         $query->bindValue(':firstName', $firstName, PDO::PARAM_STR);
         $query->bindValue(':lastName', $lastName, PDO::PARAM_STR);
         $query->bindValue(':userEmail', $userEmail, PDO::PARAM_STR);
         $query->bindValue(':userPassword', $userPassword, PDO::PARAM_STR);
 
-        $newUser = $query->execute();
-
-        return $newUser;
+        return $query->execute();
     }
-
 
     public static function getPictureByUserID(int $userID): array
     {
@@ -116,14 +112,13 @@ class UserDAO extends DAO
                 $pictures["pictureID"],
                 $pictures["caption"],
                 $pictures["url"],
-                $pictures["fk_userID"]
+                $pictures["fk_userID"],
+                $pictures["datePicture"]
             );
             $pictures = $query->fetch(PDO::FETCH_ASSOC);
         }
         return $myPicturesByUID;
     }
-
-    // = 1
 
     public static function getPicturesFavByUserID(int $userID): array
     {
@@ -141,7 +136,8 @@ class UserDAO extends DAO
                 $pictures["pictureID"],
                 $pictures["caption"],
                 $pictures["url"],
-                $pictures["fk_userID"]
+                $pictures["fk_userID"],
+                $pictures["datePicture"]
             );
             $pictures = $query->fetch(PDO::FETCH_ASSOC);
         }
@@ -166,10 +162,50 @@ class UserDAO extends DAO
         return $query->execute();
     }
 
+    public static function countUserEmail($userEmail)
+    {
+        DAO::init();
+        $query = self::$connDb->prepare("SELECT * FROM user where Email = :userEmail");
+        $query->bindValue(":userEmail", $userEmail, PDO::PARAM_STR);
+        $query->execute();
+        $row = $query->fetchAll();
+        $count = count($row);
+
+        return $count;
+
+    }
+
     public static function removeUserFromDB($userID)
     {
         DAO::init();
-        $query = self::$connDb->prepare("DELETE user, photo FROM user INNER JOIN photo ON user.userID = photo.fk_userID WHERE fk_userID = :userID");
+        $query = self::$connDb->prepare("DELETE user from user where userID = :userID");
+        $query->bindValue(':userID', $userID, PDO::PARAM_STR);
+
+        return $query->execute();
+    }
+
+    public static function removeUserPictures($userID)
+    {
+        DAO::init();
+        $query = self::$connDb->prepare("DELETE photo from photo where userID = :userID");
+        $query->bindValue(':userID', $userID, PDO::PARAM_STR);
+
+        return $query->execute();
+    }
+
+    public static function removeUserComments($userID)
+    {
+        DAO::init();
+        $query = self::$connDb->prepare("DELETE comment from comment where userID = :userID");
+        $query->bindValue(':userID', $userID, PDO::PARAM_STR);
+
+        return $query->execute();
+    }
+
+    public static function removeUserFavPictures($userID)
+    {
+        DAO::init();
+        $query = self::$connDb->prepare("DELETE favorite from favorite where userID = :userID");
         $query->bindValue(':userID', $userID, PDO::PARAM_STR);
 
         return $query->execute();
@@ -177,5 +213,3 @@ class UserDAO extends DAO
 
 
 }
-
-// TEST PROGRAM :

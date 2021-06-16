@@ -27,8 +27,7 @@ class ProfileController extends MainController
     public static function displayContent()
     {
         self::action();
-        MainController::include();
-
+        self::include();
 
         if (isset($_POST["submit"])) {
 
@@ -39,10 +38,10 @@ class ProfileController extends MainController
             PictureDAO::addPictureIntoDB($pWording, "img/" . $pName, self::$UID);
             move_uploaded_file($_FILES['picture']['tmp_name'], $uploadDirectory . $pName);
             header("Location: ./user-" . self::$UID);
-            $message = "Image uploadée !";
+            $msg = "Image uploadée !";
 
         } else {
-            $message = "Veuillez compléter les champs";
+            $msg = "Veuillez compléter les champs";
         }
 
         require_once 'app/views/profile.php';

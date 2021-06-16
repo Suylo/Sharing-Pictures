@@ -6,38 +6,66 @@ namespace App\models;
 class UserAuth
 {
 
-    private static UserAuth $_instance;
-    private static String $msg;
+    private static string $msg;
 
-    public static function getInstance(): UserAuth
+    public static function userRegister()
     {
-        if (!isset(self::$_instance)) {
-            self::$_instance = new self();
+
+        $isRegistered = false;
+
+        if (isset($_POST["firstName"]) && isset($_POST["lastName"]) && isset($_POST["userEmail"]) && isset($_POST["userPassword"])) {
+
+            $regFirstName = $_POST["firstName"];
+            $regLastName = $_POST["lastName"];
+            $regEmail = $_POST["userEmail"];
+            $regPassword = $_POST["userPassword"];
+
+            $emailIsExist = UserDAO::countUserEmail($regEmail);
+
+            if ($emailIsExist == 0) {
+                $isItReg = UserDAO::userRegister($regFirstName, $regLastName, $regEmail, $regPassword);
+                $_SESSION["userEmail"] = $regEmail;
+                $_SESSION["userPassword"] = $regPassword;
+                header("Location: ./home");
+
+                if ($isItReg == true) {
+                    $isRegistered = true;
+                } else {
+                    self::$msg = "Vous n'avez pas pu être enregistré, veuillez réessayer.";
+                }
+            } else if ($emailIsExist == 1) {
+                header("Location: ./login");
+            }
         }
-        return self::$_instance;
     }
 
-    public function userLogin()
+    public static function userLogin()
     {
         self::sessionStart();
 
 
-        if (isset($_POST["userEmail"]) && isset($_POST["userPassword"]) && isset($_POST["submit_login"])) {
+        if (isset($_POST["userEmail"]) && isset($_POST["userPassword"])) {
             $email = $_POST["userEmail"];
             $postPassword = $_POST["userPassword"];
 
-            $userInfos = UserDAO::getUserByMail($email);
-            $dbPassword = $userInfos->getUserPasswd();
-            $dbEmail = $userInfos->getUserEmail();
+            $emailIsExist = UserDAO::countUserEmail($email);
 
-            if (trim($dbPassword) == trim($postPassword) && (trim($email) == trim($dbEmail))) {
-                $_SESSION["userEmail"] = $email;
-                $_SESSION["userPassword"] = $dbPassword;
-                header("Location: ./home");
-            } else if (trim($postPassword) != trim($dbPassword) || (trim($email) == trim($dbEmail))) {
-                self::$msg = "Password ou Email incorrecte.";
-            } else {
-                self::$msg = "";
+            if ($emailIsExist == 1) {
+                $userInfos = UserDAO::getUserByMail($email);
+                $dbPassword = $userInfos->getUserPasswd();
+                $dbEmail = $userInfos->getUserEmail();
+
+                if (trim($dbPassword) == trim($postPassword) && (trim($email) == trim($dbEmail))) {
+                    $_SESSION["userEmail"] = $dbEmail;
+                    $_SESSION["userPassword"] = $dbPassword;
+                    header("Location: ./home");
+                } else if (trim($postPassword) != trim($dbPassword)) {
+                    self::$msg = "Password ou Email incorrecte.";
+                } else {
+                    self::$msg = "";
+                }
+            } else if ($emailIsExist == 0) {
+                header("Location: ./register");
             }
         }
     }
@@ -49,7 +77,7 @@ class UserAuth
         }
     }
 
-    public function userLogout()
+    public static function userLogout()
     {
         self::sessionStart();
         unset($_SESSION["userEmail"]);
@@ -57,17 +85,17 @@ class UserAuth
         header("Location: ./home");
     }
 
-    public function getMailLoggedOn()
+    public static function getMailLoggedOn()
     {
         if (self::userIsLoggedOn()) {
-            $ret = $_SESSION["userEmail"];
+            $email = $_SESSION["userEmail"];
         } else {
-            $ret = "";
+            $email = "";
         }
-        return $ret;
+        return $email;
     }
 
-    public function userIsLoggedOn(): bool
+    public static function userIsLoggedOn(): bool
     {
         $logged = false;
 

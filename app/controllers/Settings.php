@@ -11,18 +11,20 @@ class Settings extends MainController
 {
 
     private static User $userInfos;
-    private static String $msg;
+    private static string $msg;
 
     public static function displayContent()
     {
-        MainController::include();
+        self::$msg = "";
+        self::redirect();
+        self::include();
         self::checkForm();
         require_once "app/views/settings.php";
     }
 
     public static function checkForm()
     {
-        self::$userInfos = UserDAO::getUserByMail(UserAuth::getInstance()->getMailLoggedOn());
+        self::$userInfos = UserDAO::getUserByMail(UserAuth::getMailLoggedOn());
         $userID = self::$userInfos->getUserID();
         $userMail = self::$userInfos->getUserEmail();
 
@@ -40,6 +42,9 @@ class Settings extends MainController
         if (isset($_POST["confirmation"]) && isset($_POST["submitDelete"]) && $_POST["confirmation"] == $userMail) {
             UserAuth::getInstance()->userLogout();
             UserDAO::removeUserFromDB($userID);
+            UserDAO::removeUserPictures($userID);
+            UserDAO::removeUserComments($userID);
+            UserDAO::removeUserFavPictures($userID);
         } else if (isset($_POST["submitDelete"]) && $_POST["confirmation"] == "") {
             self::$msg = "Le champ de confirmation n'a pas été rempli !";
         } else if (isset($_POST["submitDelete"]) && $_POST["confirmation"] != $userMail) {

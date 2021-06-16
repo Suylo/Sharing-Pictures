@@ -21,11 +21,10 @@ class fav extends MainController
         self::$state = $_GET["like"];
     }
 
-
     public static function content()
     {
         self::action();
-        $email = UserAuth::getInstance()->getMailLoggedOn();
+        $email = UserAuth::getMailLoggedOn();
 
         if ($email != "") {
             if (self::$state == "yes") {
@@ -37,6 +36,5 @@ class fav extends MainController
 
         header("Location: ./pictures-p" . self::$idP . "-u" . self::$idU);
     }
-
 
 }
