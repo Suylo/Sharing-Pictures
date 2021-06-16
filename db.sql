@@ -18,6 +18,7 @@ CREATE TABLE photo
     caption   varchar(50),
     url       mediumtext,
     fk_userID int,
+    datePicture date,
     PRIMARY KEY (pictureID),
     FOREIGN KEY (fk_userID) REFERENCES user (userID)
 );
