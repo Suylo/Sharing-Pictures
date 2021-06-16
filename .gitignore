@@ -2,5 +2,4 @@
 /vendor/
 /composer.lock
 /package-lock.json
-/db.sql
 /.idea/
