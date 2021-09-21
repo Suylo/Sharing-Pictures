@@ -23,7 +23,6 @@ et d'autres choses qui arriveront beaucoup plus tard !
 - Les variables de session, get, post, ... ne sont pas protégées
 - Les mots de passe ne sont pas chiffrés,
 - Aucune protection contre les injections SQL, etc..  
-Donc a éviter d'upload sur un serveur web non local.
   
 ## **Installation**
 
